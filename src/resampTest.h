@@ -460,6 +460,9 @@ class GlmTest
 	    gsl_matrix *smryStat, *Psmry;
 	    gsl_matrix *anovaStat, *Panova;
 	    gsl_matrix *bootID;
+	    
+	    // Variable for holding bootstrap test statistics
+	    gsl_matrix *passingVariable;
             unsigned int nSamp;	    
             double *aic;
             unsigned int *dfDiff;

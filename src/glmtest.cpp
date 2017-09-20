@@ -64,6 +64,9 @@ void GlmTest::releaseTest(void)
 
     if (anovaStat != NULL) gsl_matrix_free(anovaStat);
     if (Panova != NULL) gsl_matrix_free(Panova);
+    
+    // release bootstrap statistics matrix
+    if (passingVariable != NULL) gsl_matrix_free(passingVariable);
 
     gsl_matrix_free(L);
     gsl_matrix_free(Rlambda);   
@@ -278,6 +281,9 @@ int GlmTest::anova(glm *fit, gsl_matrix *isXvarIn)
     gsl_matrix_set_zero (anovaStat);    
     gsl_matrix_set_zero (Panova);
     gsl_vector_set_zero (bStat);
+    
+    // variable to store the bootstrap test statistics
+    passingVariable = gsl_matrix_alloc(tm->nboot, nVars+1);
 
     PoissonGlm pNull(fit->mmRef), pAlt(fit->mmRef);
     BinGlm binNull(fit->mmRef), binAlt(fit->mmRef);
@@ -400,6 +406,9 @@ int GlmTest::anova(glm *fit, gsl_matrix *isXvarIn)
                 bAlt[mtype]->regression(bY,X1,bO,BetaO); 
                 GeeLR(bAlt[mtype], bNull[mtype], bStat);                    
             }
+            // save bootstrap test statistics
+            gsl_matrix_set_row(passingVariable, j, bStat);
+            
             // ----- get multivariate counts ------- //   
            buj = gsl_vector_ptr (bStat,0);
            suj = gsl_matrix_ptr (anovaStat, i-1, 0);
