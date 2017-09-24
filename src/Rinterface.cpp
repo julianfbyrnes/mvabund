@@ -165,7 +165,7 @@ List RtoGlmAnova(const List & sparam,
     RcppGSL::MatrixView Pstat=gsl_matrix_submatrix(myTest.Panova,0,1,nModels-1,nVars);
     
     // Wrap the bootstrap statistic variable
-    RcppGSL::MatrixView passingVariable=gsl_matrix_submatrix(myTest.passingVariable, 0, 0, tm.nboot, nVars+1);
+    RcppGSL::MatrixView bootStore=gsl_matrix_submatrix(myTest.bootStore, 0, 0, tm.nboot, nVars+1);
 
     List rs = List::create(
          Named("multstat" )= mul,
@@ -174,7 +174,7 @@ List RtoGlmAnova(const List & sparam,
          Named("Pstatj"    )= Pstat,
          Named("dfDiff"   )= NumericVector(myTest.dfDiff, myTest.dfDiff+nModels-1),
          Named("nSamp"    )= myTest.nSamp,
-         Named("bootStat")= passingVariable
+         Named("bootStat")= bootStore
     );
 
     // clear objects

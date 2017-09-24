@@ -374,6 +374,8 @@ anova.manyglm <- function(object, ..., resamp="pit.trap", test="LR", p.uni="none
     anova$uni.p <- uni.p
     anova$uni.test <- uni.test
 
+    anova$bootStat <- val$bootStat # value to hold the bootstrap variable
+
     ########### formal displays #########
     # Title and model formulas
     title <- if (test=="LR") "Analysis of Deviance Table\n"

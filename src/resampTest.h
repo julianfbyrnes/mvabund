@@ -462,7 +462,7 @@ class GlmTest
 	    gsl_matrix *bootID;
 	    
 	    // Variable for holding bootstrap test statistics
-	    gsl_matrix *passingVariable;
+	    gsl_matrix *bootStore;
             unsigned int nSamp;	    
             double *aic;
             unsigned int *dfDiff;
